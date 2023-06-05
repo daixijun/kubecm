@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"k8s.io/client-go/tools/clientcmd"
@@ -48,7 +49,7 @@ func (rc *RenameCommand) runRename(command *cobra.Command, args []string) error 
 	}
 	num := SelectUI(kubeItems, "Select The Rename Kube Context")
 	kubeName := kubeItems[num].Name
-	rename := PromptUI("Rename", kubeName)
+	rename := strings.TrimSpace(PromptUI("Rename", kubeName))
 	config, err = renameComplet(rename, kubeName, config)
 	if err != nil {
 		return err
